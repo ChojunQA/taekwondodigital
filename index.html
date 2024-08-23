@@ -55,7 +55,7 @@
                 <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
                     <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
                         <svg class="u-svg-link" viewBox="0 0 24 24"><use xlink:href="#menu-hamburger"></use></svg>
-                        <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect></g></svg>
+                        <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect></g></svg>
                     </a>
                 </div>
                 
@@ -133,7 +133,7 @@
             <div class="u-border-3 u-border-custom-color-2 u-container-style u-expanded-width u-group u-group-1">
                 <div class="u-container-layout u-container-layout-1">
                     <!-- Cuadro para mostrar el PDF -->
-                    <iframe src="https://drive.google.com/file/d/1_hT8KsG21IzBEEQ3KSjHDwSvi5mbh/view?usp=sharing" width="100%" height="600px" frameborder="0"></iframe>
+                    <iframe src="https://drive.google.com/file/d/1oFDyL_hT8KsG21IzBEEQ3KSjHDwSvi5mbh/view?usp=sharing" width="100%" height="600px" frameborder="0"></iframe>
                 </div>
             </div>
         </div>
@@ -148,5 +148,26 @@
             <p class="u-align-center u-text u-text-1">Chul Hak San - Centro de Estudios Online Taekwondo Digital.</p>
         </div>
     </footer>
+
+    <!-- Script para el chatbox de Botsonic -->
+    <script>
+      (function (w, d, s, o, f, js, fjs) {
+        w["botsonic_widget"] = o;
+        w[o] =
+          w[o] ||
+          function () {
+            (w[o].q = w[o].q || []).push(arguments);
+          };
+        (js = d.createElement(s)), (fjs = d.getElementsByTagName(s)[0]);
+        js.id = o;
+        js.src = f;
+        js.async = 1;
+        fjs.parentNode.insertBefore(js, fjs);
+      })(window, document, "script", "Botsonic", "https://widget.botsonic.com/CDN/botsonic.min.js");
+      Botsonic("init", {
+        serviceBaseUrl: "https://api-azure.botsonic.ai",
+        token: "dcc6dc56-a2c7-41dc-976d-8e9a6f3cb572",
+      });
+    </script>
 </body>
 </html>
