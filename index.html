@@ -240,8 +240,7 @@
             const superAdmin = JSON.parse(localStorage.getItem('superAdmin'));
 
             if (username === superAdmin.username && password === superAdmin.password) {
-                document.getElementById('login-container').style.transform = 'translateX(-100%)';
-                document.getElementById('admin-container').style.display = 'block';
+                window.location.href = 'home.html'; // Redirige al home.html
             } else {
                 alert('Usuario o contraseña incorrectos.');
             }
