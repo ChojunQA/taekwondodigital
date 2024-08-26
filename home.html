@@ -179,17 +179,12 @@
     <section class="u-clearfix u-section-3" id="sec-descargas">
         <div class="u-clearfix u-sheet u-sheet-1">
             <h2 class="u-text u-text-white u-text-1">Descargas</h2>
-            <div class="u-border-3 u-border-custom-color-2 u-container-style u-expanded-width u-group u-group-2">
+            <div class="u-group u-group-1">
                 <div class="u-container-layout u-container-layout-1">
-                    <!-- Enlaces para descargas -->
-                    <ul class="u-list u-list-1">
-                        <li class="u-repeater-item">
-                            <a href="descargas/manual1.pdf" class="u-link u-link-1">Manual 1</a>
-                        </li>
-                        <li class="u-repeater-item">
-                            <a href="descargas/manual2.pdf" class="u-link u-link-1">Manual 2</a>
-                        </li>
-                        <!-- Agrega más enlaces de descarga aquí -->
+                    <ul>
+                        <li><a href="descargas/material1.pdf" download>Material 1</a></li>
+                        <li><a href="descargas/material2.pdf" download>Material 2</a></li>
+                        <li><a href="descargas/material3.pdf" download>Material 3</a></li>
                     </ul>
                 </div>
             </div>
@@ -197,36 +192,44 @@
     </section>
 
     <!-- Pie de página -->
-    <footer class="u-footer">
+    <footer class="u-footer u-footer-1">
         <div class="u-clearfix u-sheet u-sheet-1">
             <div class="u-footer-content">
-                <a href="https://www.instagram.com/chulhaksan.mendoza/" class="u-image u-logo u-logo-1">
-                    <img src="images/default-logo.png" class="u-logo-image">
-                </a>
-                <a href="https://www.instagram.com/chulhaksan.mendoza/" class="u-image u-logo u-logo-2">
-                    <img src="images/federacion.png" class="u-logo-image">
-                </a>
+                <img src="images/default-logo.png" class="u-logo-image" alt="Logo 1">
+                <img src="images/federacion.png" class="u-logo-image" alt="Logo 2">
             </div>
-            <p class="u-text">© 2024 Chul Hak San. Todos los derechos reservados.</p>
+            <p class="u-text u-text-2">© 2024 Taekwondo Digital. Todos los derechos reservados.</p>
         </div>
     </footer>
 
     <!-- Script para manejar la sesión -->
-<script>
-    // Función para cerrar sesión
-    function logout() {
-        localStorage.removeItem('currentUser'); // Elimina el nombre de usuario actual del almacenamiento local
-        localStorage.removeItem('isLoggedIn'); // Elimina el estado de sesión
-        window.location.href = 'index.html'; // Redirige a la página de inicio de sesión
-    }
-
-    // Verifica la sesión al cargar la página
-    window.onload = function() {
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
-            // Redirige a la página de inicio si no hay sesión activa
-            window.location.href = 'index.html';
+    <script>
+        // Función para cerrar sesión
+        function logout() {
+            localStorage.removeItem('currentUser'); // Elimina el nombre de usuario actual del almacenamiento local
+            localStorage.removeItem('isLoggedIn'); // Elimina el estado de sesión
+            window.location.href = 'index.html'; // Redirige a la página de inicio de sesión
         }
-    };
-</script>
+
+        // Función para verificar la sesión y redirigir si no está logueado
+        function checkSession() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                // Redirige a la página de inicio si no hay sesión activa
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Inicializa la sesión si es necesario
+        function initializeSession() {
+            // Aquí puedes establecer 'isLoggedIn' si es necesario
+            // localStorage.setItem('isLoggedIn', 'true'); // Ejemplo de cómo establecer 'isLoggedIn'
+        }
+
+        // Ejecutar funciones cuando la página carga
+        window.onload = function() {
+            initializeSession(); // Configura la sesión según sea necesario
+            checkSession(); // Verifica el estado de la sesión
+        };
+    </script>
 </body>
 </html>

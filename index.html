@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Bloqueo - Chulhaksan</title>
     <style>
+        /* Estilos originales */
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
-        }
-        body {
+            justify-content: center; /* Centrar verticalmente */
+            align-items: center; /* Centrar horizontalmente */
             background-color: #000;
             font-family: Arial, sans-serif;
             color: white;
@@ -21,15 +22,11 @@
             margin-top: 20px;
             font-size: 24px;
             color: #e67e22; /* Color naranja */
+            text-align: center;
         }
-        .main-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            flex: 1; /* Expande el contenedor principal para ocupar el espacio disponible */
+        .logo {
+            width: 200px;
+            margin-top: 20px; /* Espacio entre el título y el logo */
         }
         .login-container {
             width: 400px;
@@ -38,8 +35,7 @@
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            position: absolute;
-            transition: transform 0.3s ease;
+            margin-top: 20px; /* Espacio entre el logo y la caja de login */
         }
         .admin-container {
             width: 400px;
@@ -49,7 +45,10 @@
             text-align: center;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
             display: none; /* Oculto por defecto */
-            margin-left: 20px;
+            position: absolute; /* Posicionamiento absoluto para la separación */
+            left: 0; /* Alineado con el login */
+            top: 0; /* Alineado al top */
+            transition: transform 0.3s ease;
         }
         input[type="text"], input[type="password"] {
             width: 80%;
@@ -145,20 +144,6 @@
         .modal-content button {
             margin: 5px;
         }
-        /* Estilos del pie de página */
-        footer {
-            background-color: #e67e22;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            width: 100%;
-        }
-        .footer-logo {
-            height: 30px;
-        }
-        .footer-content {
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
@@ -166,28 +151,29 @@
     <!-- Título -->
     <div class="title">Centro de Información Digital Chul Hak San</div>
 
-    <div class="main-container">
-        <div class="login-container" id="login-container">
-            <h2>Ingreso</h2>
-            <input type="text" id="username" placeholder="Usuario" required>
-            <input type="password" id="password" placeholder="Contraseña" required>
-            <button onclick="login()">Ingresar</button>
-            <button onclick="toggleAdmin()">Administrador</button>
-        </div>
+    <!-- Logo -->
+    <img src="images/default-logo.png" class="logo" alt="Logo Chul Hak San">
 
-        <!-- Sección de administración -->
-        <div class="admin-container" id="admin-container">
-            <button onclick="toggleAdmin()">Cerrar</button>
-            <button onclick="toggleUserList()">Desplegar Lista</button>
-            <div id="user-section" style="display: none;">
-                <h3>Administrar Usuarios</h3>
-                <input type="text" id="new-username" placeholder="Nuevo Usuario">
-                <input type="password" id="new-password" placeholder="Nueva Contraseña">
-                <button onclick="addUser()">Agregar</button>
-                <div class="user-list" id="user-list">
-                    <h3>Usuarios Registrados</h3>
-                    <ul id="userListUl"></ul>
-                </div>
+    <div class="login-container" id="login-container">
+        <h2>Ingreso</h2>
+        <input type="text" id="username" placeholder="Usuario" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <button onclick="login()">Ingresar</button>
+        <button onclick="showAdminLogin()">Administrador</button>
+    </div>
+
+    <!-- Sección de administración -->
+    <div class="admin-container" id="admin-container">
+        <button onclick="toggleAdmin()">Cerrar</button>
+        <button onclick="toggleUserList()">Desplegar Lista</button>
+        <div id="user-section" style="display: none;">
+            <h3>Administrar Usuarios</h3>
+            <input type="text" id="new-username" placeholder="Nuevo Usuario">
+            <input type="password" id="new-password" placeholder="Nueva Contraseña">
+            <button onclick="addUser()">Agregar</button>
+            <div class="user-list" id="user-list">
+                <h3>Usuarios Registrados</h3>
+                <ul id="userListUl"></ul>
             </div>
         </div>
     </div>
@@ -201,19 +187,6 @@
             <button onclick="closeModal()">Cancelar</button>
         </div>
     </div>
-
-    <!-- Pie de página -->
-    <footer>
-        <div class="footer-content">
-            <a href="https://www.instagram.com/chulhaksan.mendoza/" class="u-image u-logo u-logo-1">
-                <img src="images/default-logo.png" class="footer-logo">
-            </a>
-            <a href="https://www.instagram.com/chulhaksan.mendoza/" class="u-image u-logo u-logo-2">
-                <img src="images/federacion.png" class="footer-logo">
-            </a>
-        </div>
-        <p>© 2024 Chul Hak San. Todos los derechos reservados.</p>
-    </footer>
 
     <script>
         // Generar hash simple (mejor usar una librería de hashing en producción)
@@ -234,15 +207,42 @@
         }
 
         function login() {
-            const username = document.getElementById('username').value;
+            const username = document.getElementById('username').value.trim();
             const password = simpleHash(document.getElementById('password').value);
 
             const superAdmin = JSON.parse(localStorage.getItem('superAdmin'));
+            const users = JSON.parse(localStorage.getItem('users')) || [];
 
+            // Verificar superusuario
             if (username === superAdmin.username && password === superAdmin.password) {
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'home.html'; // Redirige al home.html
+                return;
+            }
+
+            // Verificar usuarios regulares
+            const foundUser = users.find(user => user.username === username && user.password === password);
+            if (foundUser) {
+                localStorage.setItem('isLoggedIn', 'true');
                 window.location.href = 'home.html'; // Redirige al home.html
             } else {
                 alert('Usuario o contraseña incorrectos.');
+            }
+        }
+
+        function showAdminLogin() {
+            const adminUsername = prompt("Ingrese el usuario del administrador:");
+            const adminPassword = prompt("Ingrese la contraseña del administrador:");
+            const hashedPassword = simpleHash(adminPassword);
+
+            const superAdmin = JSON.parse(localStorage.getItem('superAdmin'));
+
+            if (adminUsername === superAdmin.username && hashedPassword === superAdmin.password) {
+                document.getElementById('admin-container').style.display = 'block';
+                document.getElementById('login-container').style.display = 'none';
+                updateUserList();
+            } else {
+                alert('Credenciales de administrador incorrectas.');
             }
         }
 
@@ -252,29 +252,38 @@
 
             if (adminContainer.style.display === 'block') {
                 adminContainer.style.display = 'none';
-                loginContainer.style.transform = 'translateX(0)';
+                loginContainer.style.display = 'block'; // Mostrar el login
             } else {
                 adminContainer.style.display = 'block';
-                loginContainer.style.transform = 'translateX(-100%)';
+                loginContainer.style.display = 'none'; // Ocultar el login
             }
-        }
-
-        function closeAdmin() {
-            document.getElementById('admin-container').style.display = 'none';
-            document.getElementById('login-container').style.transform = 'translateX(0)';
         }
 
         function toggleUserList() {
             const userSection = document.getElementById('user-section');
             userSection.style.display = userSection.style.display === 'none' ? 'block' : 'none';
+            updateUserList(); // Actualizar la lista de usuarios al desplegar
         }
 
         function addUser() {
-            const username = document.getElementById('new-username').value;
-            const password = simpleHash(document.getElementById('new-password').value);
+            const newUsername = document.getElementById('new-username').value.trim();
+            const newPassword = document.getElementById('new-password').value;
+
+            if (!newUsername || !newPassword) {
+                alert('Complete los campos de usuario y contraseña.');
+                return;
+            }
 
             let users = JSON.parse(localStorage.getItem('users')) || [];
-            users.push({ username, password });
+
+            // Validación para evitar usuarios duplicados
+            const usernameExists = users.some(user => user.username.toLowerCase() === newUsername.toLowerCase());
+            if (usernameExists) {
+                alert('El usuario ya existe.');
+                return;
+            }
+
+            users.push({ username: newUsername, password: simpleHash(newPassword) });
             localStorage.setItem('users', JSON.stringify(users));
             updateUserList();
         }
@@ -287,50 +296,66 @@
 
             users.forEach((user, index) => {
                 const li = document.createElement('li');
-                li.innerHTML = `
-                    ${user.username}
-                    <button onclick="openModifyModal(${index})">✏️</button>
-                    <button onclick="confirmDeleteUser(${index})">❌</button>
-                `;
+                li.textContent = user.username;
+
+                const modifyButton = document.createElement('button');
+                modifyButton.innerHTML = "✎"; // Icono de lápiz
+                modifyButton.onclick = () => openModifyModal(index);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = "❌"; // Icono de X
+                deleteButton.onclick = () => deleteUser(index);
+
+                li.appendChild(modifyButton);
+                li.appendChild(deleteButton);
+
                 userListUl.appendChild(li);
             });
         }
 
         function openModifyModal(index) {
-            const users = JSON.parse(localStorage.getItem('users'));
-            const currentPassword = users[index].password;
+            const modifyModal = document.getElementById('modifyModal');
+            modifyModal.style.display = 'flex';
 
-            document.getElementById('modifyModal').style.display = 'flex';
-            document.getElementById('newPassword').dataset.index = index;
+            // Guardar el índice del usuario que se está modificando
+            modifyModal.dataset.userIndex = index;
+        }
+
+        function closeModal() {
+            const modifyModal = document.getElementById('modifyModal');
+            modifyModal.style.display = 'none';
         }
 
         function saveChanges() {
             const newPassword = document.getElementById('newPassword').value;
-            const index = document.getElementById('newPassword').dataset.index;
-            const users = JSON.parse(localStorage.getItem('users'));
+            const index = document.getElementById('modifyModal').dataset.userIndex;
 
+            if (!newPassword) {
+                alert('La nueva contraseña no puede estar vacía.');
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('users')) || [];
             users[index].password = simpleHash(newPassword);
+
             localStorage.setItem('users', JSON.stringify(users));
             updateUserList();
             closeModal();
         }
 
-        function confirmDeleteUser(index) {
+        function deleteUser(index) {
             if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-                const users = JSON.parse(localStorage.getItem('users'));
+                let users = JSON.parse(localStorage.getItem('users')) || [];
                 users.splice(index, 1);
                 localStorage.setItem('users', JSON.stringify(users));
                 updateUserList();
             }
         }
 
-        function closeModal() {
-            document.getElementById('modifyModal').style.display = 'none';
-        }
-
-        // Inicializar lista de usuarios
-        document.addEventListener('DOMContentLoaded', updateUserList);
+        // Mostrar el login y ocultar la sección de administración al cargar la página
+        document.getElementById('login-container').style.display = 'block';
+        document.getElementById('admin-container').style.display = 'none';
     </script>
-
 </body>
 </html>
+
