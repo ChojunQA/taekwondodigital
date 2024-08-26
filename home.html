@@ -93,9 +93,28 @@
             height: 2cm;
             background-color: #000;
         }
+        /* Botón de cerrar sesión */
+        .logout-button {
+            background-color: #e67e22; /* Naranja */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        .logout-button:hover {
+            background-color: #d35400; /* Naranja oscuro */
+        }
     </style>
 </head>
 <body data-home-page="" data-home-page-title="Page 3" data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="es">
+
+    <!-- Botón de cerrar sesión -->
+    <button class="logout-button" onclick="logout()">Cerrar sesión</button>
 
     <!-- Sección principal del contenido -->
     <section class="u-black u-clearfix u-section-1" id="sec-1487">
@@ -177,9 +196,6 @@
         </div>
     </section>
 
-    <!-- Espacio negro entre sección de descargas y pie de página -->
-    <div class="u-space"></div>
-
     <!-- Pie de página -->
     <footer class="u-footer">
         <div class="u-clearfix u-sheet u-sheet-1">
@@ -195,25 +211,22 @@
         </div>
     </footer>
 
-    <!-- Script para el chatbox de Botsonic -->
-    <script>
-      (function (w, d, s, o, f, js, fjs) {
-        w["botsonic_widget"] = o;
-        w[o] =
-          w[o] ||
-          function () {
-            (w[o].q = w[o].q || []).push(arguments);
-          };
-        (js = d.createElement(s)), (fjs = d.getElementsByTagName(s)[0]);
-        js.id = o;
-        js.src = f;
-        js.async = 1;
-        fjs.parentNode.insertBefore(js, fjs);
-      })(window, document, "script", "Botsonic", "https://widget.botsonic.com/CDN/botsonic.min.js");
-      Botsonic("init", {
-        serviceBaseUrl: "https://api-azure.botsonic.ai",
-        token: "dcc6dc56-a2c7-41dc-976d-8e9a6f3cb572",
-      });
-    </script>
+    <!-- Script para manejar la sesión -->
+<script>
+    // Función para cerrar sesión
+    function logout() {
+        localStorage.removeItem('currentUser'); // Elimina el nombre de usuario actual del almacenamiento local
+        localStorage.removeItem('isLoggedIn'); // Elimina el estado de sesión
+        window.location.href = 'index.html'; // Redirige a la página de inicio de sesión
+    }
+
+    // Verifica la sesión al cargar la página
+    window.onload = function() {
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            // Redirige a la página de inicio si no hay sesión activa
+            window.location.href = 'index.html';
+        }
+    };
+</script>
 </body>
 </html>
