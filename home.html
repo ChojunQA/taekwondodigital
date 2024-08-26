@@ -110,6 +110,27 @@
             background-color: #d35400; /* Naranja oscuro */
         }
     </style>
+ <!-- Script para el chatbox de Botsonic -->
+ <script>
+    (function (w, d, s, o, f, js, fjs) {
+        w["botsonic_widget"] = o;
+        w[o] =
+          w[o] ||
+          function () {
+            (w[o].q = w[o].q || []).push(arguments);
+          };
+        (js = d.createElement(s)), (fjs = d.getElementsByTagName(s)[0]);
+        js.id = o;
+        js.src = f;
+        js.async = 1;
+        fjs.parentNode.insertBefore(js, fjs);
+    })(window, document, "script", "Botsonic", "https://widget.botsonic.com/CDN/botsonic.min.js");
+    Botsonic("init", {
+        serviceBaseUrl: "https://api-azure.botsonic.ai",
+        token: "dcc6dc56-a2c7-41dc-976d-8e9a6f3cb572",
+    });
+</script>
+
 </head>
 <body data-home-page="" data-home-page-title="Page 3" data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="es">
 
